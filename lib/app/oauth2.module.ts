@@ -14,12 +14,12 @@ export class Oauth2Module {
         };
     }
 
-    public static forRootAsync(options: Oauth2AsyncOptionsInterface): DynamicModule {
+    public static forRootAsync(options: Oauth2AsyncOptionsInterface, connection: string): DynamicModule {
         return {
             module: Oauth2Module,
             imports: [
                 /** Modules **/
-                Oauth2CoreModule.forRootAsync(options),
+                Oauth2CoreModule.forRootAsync(options, connection),
             ],
         };
     }

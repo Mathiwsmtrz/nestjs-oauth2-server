@@ -4,8 +4,7 @@ import {
 } from "../../domain";
 import {Repository} from "typeorm";
 import {Inject, Injectable} from '@nestjs/common';
-import {InjectRepository} from '@nestjs/typeorm';
-import { CLIENT_PROVIDER } from "domain/modules/modules.dto";
+import { CLIENT_PROVIDER } from "../../domain/modules/modules.dto";
 
 @Injectable()
 export class ClientRepository implements ClientRepositoryInterface {

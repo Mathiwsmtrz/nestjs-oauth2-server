@@ -84,6 +84,7 @@ import { OAuth2Module } from 'nestjs-oauth2-server';
         OAuth2Module.forRoot({
             userLoader: new UserLoader(),
             userValidator: new UserValidator(),
+            connection: 'NAME_CONNECTION_PROVIDER'
         }),
     ],
 })
@@ -103,6 +104,7 @@ import { OAuth2Module } from 'nestjs-oauth2-server';
             useFactory: () => ({
                 userLoader: new UserLoader(),
                 userValidator: new UserValidator(),
+                connection: 'NAME_CONNECTION_PROVIDER'
             })
         }),
     ],
@@ -120,7 +122,7 @@ and use the different implemented strategies accordingly to the request sent.
 Used for server-to-server communications. 
 
 ```bash
-curl -X POST http://localhost:3000/oauth2/token -d '{"grant_type":"client_credentials", "client_id":"6ab1cfab-0b3d-418b-8ca2-94d98663fb6f", "client_secret": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb60wu", "scopes": ["app-1"]}'
+curl -X POST http://localhost:3000/oauth2/token -d '{"grantType":"client_credentials", "clientId":"6ab1cfab-0b3d-418b-8ca2-94d98663fb6f", "clientSecret": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb60wu", "scopes": ["app-1"]}'
 ```
 
 ### Refresh Token
@@ -128,7 +130,7 @@ curl -X POST http://localhost:3000/oauth2/token -d '{"grant_type":"client_creden
 Used to refresh an existing token
 
 ```bash
-curl -X POST http://localhost:3000/oauth2/token -d '{"grant_type":"refresh_token", "client_id":"6ab1cfab-0b3d-418b-8ca2-94d98663fb6f", "client_secret": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb60wu", "refresh_token": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb6fgqstyudhjqskdqsd"}'
+curl -X POST http://localhost:3000/oauth2/token -d '{"grantType":"refreshToken", "clientId":"6ab1cfab-0b3d-418b-8ca2-94d98663fb6f", "clientSecret": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb60wu", "refreshToken": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb6fgqstyudhjqskdqsd"}'
 ```
 
 ### Password
@@ -136,7 +138,7 @@ curl -X POST http://localhost:3000/oauth2/token -d '{"grant_type":"refresh_token
 Used to refresh an existing token
 
 ```bash
-curl -X POST http://localhost:3000/oauth2/token -d '{"grant_type":"password", "client_id":"6ab1cfab-0b3d-418b-8ca2-94d98663fb6f", "username": "j.doe@change.me", "password": "changeme", "scopes": ["app-1"]}'
+curl -X POST http://localhost:3000/oauth2/token -d '{"grantType":"password", "clientId":"6ab1cfab-0b3d-418b-8ca2-94d98663fb6f", "clientSecret": "6nV9GGm1pu8OY0HDZ3Y7QsVnxtkb60wu", "username": "j.doe@change.me", "password": "changeme", "scopes": ["app-1"]}'
 ```
 
 ## Securing your routes using the `AccessTokenStrategy`

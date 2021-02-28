@@ -4,3 +4,4 @@ export * from './repository';
 export * from './exception';
 export * from './strategy';
 export * from './interface';
+export * from './modules';

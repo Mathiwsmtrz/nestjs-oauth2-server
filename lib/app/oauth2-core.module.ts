@@ -13,8 +13,8 @@ import {AccessTokenStrategy} from "../infrastructure/strategy";
 import {Oauth2Controller} from "../ui/controller";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
-import { ClientModule } from "domain/modules/client.module";
-import { AccessTokenModule } from "domain/modules/access-token.module";
+import { ClientModule } from "../domain/modules/client.module";
+import { AccessTokenModule } from "../domain/modules/access-token.module";
 
 
 export const CommandHandlers = [
@@ -94,12 +94,12 @@ export class Oauth2CoreModule implements OnModuleInit {
             module: Oauth2CoreModule,
             imports: [
                 CqrsModule,
-                ClientModule,
-                AccessTokenModule,
-                TypeOrmModule.forFeature([
-                    ClientEntity,
-                    AccessTokenEntity,
-                ]),
+                ClientModule.forRoot(options.connection),
+                AccessTokenModule.forRoot(options.connection),
+                // TypeOrmModule.forFeature([
+                //     ClientEntity,
+                //     AccessTokenEntity,
+                // ]),
             ],
             controllers: [
                 Oauth2Controller
@@ -121,13 +121,14 @@ export class Oauth2CoreModule implements OnModuleInit {
             exports: [
                 ...Providers,
                 ...ServiceNames,
+                ...CommandHandlers,
                 userValidatorProvider,
                 userLoaderProvider
             ]
         };
     }
 
-    public static forRootAsync(options: Oauth2AsyncOptionsInterface): DynamicModule {
+    public static forRootAsync(options: Oauth2AsyncOptionsInterface, connection: string): DynamicModule {
         const providers: Provider[] = this.createAsyncProviders(options);
 
         const userLoaderProvider = {
@@ -151,10 +152,12 @@ export class Oauth2CoreModule implements OnModuleInit {
             imports: [
                 ...(options.imports || []),
                 CqrsModule,
-                TypeOrmModule.forFeature([
-                    ClientEntity,
-                    AccessTokenEntity,
-                ]),
+                ClientModule.forRoot(connection),
+                AccessTokenModule.forRoot(connection),
+                // TypeOrmModule.forFeature([
+                //     ClientEntity,
+                //     AccessTokenEntity,
+                // ]),
             ],
             providers: [
                 ...providers,
@@ -176,6 +179,7 @@ export class Oauth2CoreModule implements OnModuleInit {
             exports: [
                 ...Providers,
                 ...ServiceNames,
+                ...CommandHandlers,
                 userValidatorProvider,
                 userLoaderProvider
             ]

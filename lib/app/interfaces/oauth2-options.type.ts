@@ -3,4 +3,5 @@ import {UserLoaderInterface, UserValidatorInterface} from "../../domain/interfac
 export type OAuth2Options = {
     userLoader: UserLoaderInterface,
     userValidator: UserValidatorInterface,
+    connection?: string,
 };
