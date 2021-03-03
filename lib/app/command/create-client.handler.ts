@@ -5,7 +5,7 @@ import {
     ClientEntity,
     ClientRepositoryInterface,
 } from "../../domain";
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import * as crypto from "crypto";
 import * as selfsigned from 'selfsigned';
 import {ClientCreatedEvent} from "../event";

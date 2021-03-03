@@ -6,6 +6,8 @@ import {
     Post,
     Body,
     UseInterceptors,
+    UsePipes,
+    ValidationPipe,
 } from "@nestjs/common";
 import {
     OAuth2Request,
@@ -33,7 +35,8 @@ export class Oauth2Controller {
     }
 
     @Post('token')
-    async token(@Body() request: OAuth2Request): Promise<OAuth2Response> {
+    @UsePipes(new ValidationPipe({ transform: true }))
+    async token(@Body() request): Promise<OAuth2Response> {
         console.log(request);
         const client = await this.clientRepository.findByClientId(request.clientId);
         if (!await this.strategyRegistry.validate(request,client)) {

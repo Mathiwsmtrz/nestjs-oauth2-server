@@ -1,4 +1,4 @@
-import {DynamicModule, Global, Inject, Module, OnModuleInit, Provider} from "@nestjs/common";
+import {DynamicModule, Global, Inject, Module, OnModuleInit, Provider, ValidationPipe} from "@nestjs/common";
 import {AccessTokenEntity, ClientEntity, Oauth2GrantStrategyRegistry, StrategyExplorer} from "../domain";
 import {Oauth2AsyncOptionsInterface, OAuth2Options, Oauth2OptionsFactoryInterface} from "./interfaces";
 import {OAUTH2_SERVER_OPTIONS} from "./oauth2.constants";
@@ -15,6 +15,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {CqrsModule} from "@nestjs/cqrs";
 import { ClientModule } from "../domain/modules/client.module";
 import { AccessTokenModule } from "../domain/modules/access-token.module";
+import { APP_PIPE } from "@nestjs/core";
 
 
 export const CommandHandlers = [
@@ -105,6 +106,12 @@ export class Oauth2CoreModule implements OnModuleInit {
                 Oauth2Controller
             ],
             providers: [
+                {
+                    provide: APP_PIPE,
+                    useValue: new ValidationPipe({
+                      transform: true,
+                    }),
+                  },
                 oAuth2OptionsProvider,
                 userValidatorProvider,
                 userLoaderProvider,
@@ -160,6 +167,12 @@ export class Oauth2CoreModule implements OnModuleInit {
                 // ]),
             ],
             providers: [
+                {
+                    provide: APP_PIPE,
+                    useValue: new ValidationPipe({
+                      transform: true,
+                    }),
+                  },
                 ...providers,
                 userValidatorProvider,
                 userLoaderProvider,
