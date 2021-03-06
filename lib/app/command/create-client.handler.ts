@@ -26,6 +26,7 @@ export class CreateClientHandler implements ICommandHandler<CreateClientCommand>
      */
     async execute(command: CreateClientCommand) {
         const client = new ClientEntity();
+        client.id = uuid();
         client.name = command.name;
         client.clientId = command.clientId || uuid();
         if (!command.noSecret) {
@@ -60,5 +61,9 @@ export class CreateClientHandler implements ICommandHandler<CreateClientCommand>
         ));
 
         return createdClient;
+    }
+
+    async findAll() {
+        return { data: await this.clientRepository.findAll()};
     }
 }

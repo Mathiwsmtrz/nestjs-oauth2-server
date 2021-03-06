@@ -13,6 +13,10 @@ export class ClientRepository implements ClientRepositoryInterface {
         private readonly repository: Repository<ClientEntity>
     ) {}
 
+    async findAll(): Promise<ClientEntity[]> {
+        return await this.repository.find();
+    }
+
     async find(id: string): Promise<ClientEntity> {
         const client = await this.repository.findOne(id);
 

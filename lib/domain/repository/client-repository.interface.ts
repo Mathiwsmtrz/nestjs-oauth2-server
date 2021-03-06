@@ -15,6 +15,11 @@ export interface ClientRepositoryInterface {
     find(id: string): Promise<ClientEntity>;
 
     /**
+     * Find the client all
+     */
+    findAll(): Promise<ClientEntity[]>;
+
+    /**
      * Finds a client using its clientId
      *
      * @param clientId
